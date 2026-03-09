@@ -17,7 +17,9 @@ type FileDb = {
   subscriptions: Array<SubscriptionRecord & { updatedAt: string }>;
 };
 
-const dbPath = path.join(process.cwd(), ".local-db.json");
+const dbPath = process.env.VERCEL
+  ? path.join("/tmp", ".local-db.json")
+  : path.join(process.cwd(), ".local-db.json");
 
 async function readDb(): Promise<FileDb> {
   try {
